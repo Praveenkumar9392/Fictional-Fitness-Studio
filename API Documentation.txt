@@ -1,0 +1,113 @@
+API Documentation
+Base URL : http://<your-domain-or-localhost>/
+
+1. List Upcoming Fitness Classes
+Endpoint:
+GET /api/classes/
+Query Parameters:
+
+tz (optional): Timezone (default is Asia/Kolkata)
+
+Response:
+[
+  {
+    "id": 1,
+    "name": "Yoga Basics",
+    "datetime": "2025-06-06T10:00:00+05:30",
+    "instructor": "Aditi Mehra",
+    "available_slots": 8
+  },
+  ...
+]
+
+----------------------------------------------------------------
+2. Create a Fitness Class
+Endpoint:
+
+bash
+Copy
+Edit
+POST /api/classes/
+Request Body (JSON):
+{
+  "name": "HIIT Training",
+  "datetime": "2025-06-07T08:00:00",
+  "instructor": "Raj Verma",
+  "available_slots": 15
+}
+The datetime must be in ISO format (YYYY-MM-DDTHH:MM:SS)
+
+Successful Response (201 Created):
+
+{
+  "id": 2,
+  "name": "HIIT Training",
+  "datetime": "2025-06-07T08:00:00+05:30",
+  "instructor": "Raj Verma",
+  "available_slots": 15
+}
+Error Response (400 Bad Request):
+
+{
+  "error": "Missing field: instructor"
+}
+-----------------------------------------------------
+ 3. Book a Class
+Endpoint:
+
+POST /book/
+Request Body (JSON):
+
+{
+  "class_id": 1,
+  "client_name": "Neha Sharma",
+  "client_email": "neha@example.com"
+}
+Successful Response (201 Created):
+
+{
+  "id": 5,
+  "fitness_class": 1,
+  "client_name": "Neha Sharma",
+  "client_email": "neha@example.com",
+  "booked_at": "2025-06-05T13:20:30.456Z"
+}
+Error Responses:
+
+No slots available:
+
+{
+  "error": "No available slots."
+}
+Duplicate booking:
+
+{
+  "error": "You have already booked this class."
+}
+Class not found:
+
+{
+  "error": "Class not found."
+}
+
+----------------------------------------------------------------
+4. View Bookings by Email
+Endpoint:
+
+GET /api/bookings/?email=neha@example.com
+Successful Response:
+
+[
+  {
+    "id": 5,
+    "fitness_class": 1,
+    "client_name": "Neha Sharma",
+    "client_email": "neha@example.com",
+    "booked_at": "2025-06-05T13:20:30.456Z"
+  }
+]
+Error Response:
+
+{
+  "error": "Email is required."
+}
