@@ -13,10 +13,15 @@ This Django REST API allows users to:
 ### 1. Clone the repository
 
 git clone [https://github.com/your-username/fitness-booking-api.git](https://github.com/Praveenkumar9392/Fictional-Fitness-Studio.git)
+
 cd fitness-booking-api
+
 python -m venv myenv
+
 source myenv/bin/activate   # On Windows: myenv\Scripts\activate
+
 pip install -r requirements.txt
+
 python manage.py runserver
 
 python manage.py migrate
